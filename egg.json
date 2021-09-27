@@ -1,9 +1,9 @@
 {
   "$schema": "https://x.nest.land/eggs@0.3.9/src/schema.json",
-    "name": "",
+    "name": "camelcase",
   "entry": "./mod.ts",
-  "description": "",
-  "homepage": "https://github.com/UltiRequiem/deno-",
+  "description": "Convert dash/dot/underscore/space separated string to camelCase",
+  "homepage": "https://github.com/UltiRequiem/deno-camelCase",
   "version": "0.0.0",
   "releaseType": "patch",
   "unstable": false,
