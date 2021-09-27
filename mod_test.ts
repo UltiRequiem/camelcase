@@ -1,5 +1,5 @@
 import { assertEquals } from "./test_deps.ts";
-import camelCase, { camelCaseSync } from "./mod.js";
+import camelCase, { camelCaseSync } from "./mod.ts";
 
 Deno.test("camelCaseSync", async () => {
   assertEquals(await camelCase("foo"), "foo");

@@ -1,4 +1,10 @@
-function preserveCamelCase(string, locale) {
+interface Options {
+  readonly pascalCase?: boolean;
+  readonly preserveConsecutiveUppercase?: boolean;
+  readonly locale?: string | string[];
+}
+
+function preserveCamelCase(string: string, locale: string) {
   let isLastCharLower = false;
   let isLastCharUpper = false;
   let isLastLastCharUpper = false;
@@ -31,11 +37,11 @@ function preserveCamelCase(string, locale) {
   return string;
 }
 
-function preserveConsecutiveUppercase(input) {
+function preserveConsecutiveUppercase(input: string) {
   return input.replace(/^[\p{Lu}](?![\p{Lu}])/gu, (m1) => m1.toLowerCase());
 }
 
-function postProcess(input, options) {
+function postProcess(input: string, options: Options) {
   return input.replace(
     /[_.\- ]+([\p{Alpha}\p{N}_]|$)/gu,
     (_, p1) => p1.toLocaleUpperCase(options.locale),
@@ -46,7 +52,7 @@ function postProcess(input, options) {
     );
 }
 
-export function camelCaseSync(input, options) {
+export function camelCaseSync(input: string | string[], options?: Options) {
   if (!(typeof input === "string" || Array.isArray(input))) {
     throw new TypeError("Expected the input to be `string | string[]`");
   }
@@ -78,7 +84,7 @@ export function camelCaseSync(input, options) {
   const hasUpperCase = input !== input.toLocaleLowerCase(options.locale);
 
   if (hasUpperCase) {
-    input = preserveCamelCase(input, options.locale);
+    input = preserveCamelCase(input, options.locale as string);
   }
 
   input = input.replace(/^[_.\- ]+/, "");
@@ -96,6 +102,9 @@ export function camelCaseSync(input, options) {
   return postProcess(input, options);
 }
 
-export default function camelcase(input, options) {
+export default function camelcase(
+  input: string | string[],
+  options?: Options,
+): Promise<string> {
   return Promise.resolve(camelCaseSync(input, options));
 }
