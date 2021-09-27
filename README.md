@@ -42,7 +42,7 @@ String to convert to camel case.
 
 #### options
 
-Type: `object`
+Type: [`object`](https://github.com/UltiRequiem/deno-camelcase/blob/main/mod.ts#L1)
 
 ##### pascalCase
 
@@ -66,18 +66,18 @@ Default: The host environment’s current locale.
 The locale parameter indicates the locale to be used to convert to upper/lower case according to any locale-specific case mappings. If multiple locales are given in an array, the best available locale is used.
 
 ```js
-const camelCase = require("camelcase");
+import { camelCaseSync } from "https://deno.land/x/camelcase/mod.ts";
 
-camelCase("lorem-ipsum", { locale: "en-US" });
+camelCaseSync("lorem-ipsum", { locale: "en-US" });
 //=> 'loremIpsum'
 
-camelCase("lorem-ipsum", { locale: "tr-TR" });
+camelCaseSync("lorem-ipsum", { locale: "tr-TR" });
 //=> 'loremİpsum'
 
-camelCase("lorem-ipsum", { locale: ["en-US", "en-GB"] });
+camelCaseSync("lorem-ipsum", { locale: ["en-US", "en-GB"] });
 //=> 'loremIpsum'
 
-camelCase("lorem-ipsum", { locale: ["tr", "TR", "tr-TR"] });
+camelCaseSync("lorem-ipsum", { locale: ["tr", "TR", "tr-TR"] });
 //=> 'loremİpsum'
 ```
 
