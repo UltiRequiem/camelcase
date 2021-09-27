@@ -27,6 +27,8 @@ console.log(await camelcase("foo-bar-lol example_34 spaced word"));
 console.log(camelCaseSync("Foo_bar"));
 ```
 
+See [example.ts](./example.ts) and [mod_test.ts](./mod_test.ts) for more examples usage.
+
 ### License
 
 [This project](https://deno.land/x/camelcase) is licensed under the
