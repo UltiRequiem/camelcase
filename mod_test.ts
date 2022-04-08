@@ -1,514 +1,460 @@
-import { assertEquals } from "./test_deps.ts";
-import camelCase, { camelCaseSync } from "./mod.ts";
+import { assertEquals } from "https://deno.land/std@0.108.0/testing/asserts.ts";
+import { camelCase } from "./mod.ts";
 
-Deno.test("camelCaseSync", async () => {
-  assertEquals(await camelCase("foo"), "foo");
-  assertEquals(await camelCase("foo-bar"), "fooBar");
-  assertEquals(await camelCase("foo-bar-baz"), "fooBarBaz");
-  assertEquals(await camelCase("foo--bar"), "fooBar");
-  assertEquals(await camelCase("--foo-bar"), "fooBar");
-  assertEquals(await camelCase("--foo--bar"), "fooBar");
-  assertEquals(await camelCase("FOO-BAR"), "fooBar");
-  assertEquals(await camelCase("FOÈ-BAR"), "foèBar");
-  assertEquals(await camelCase("-foo-bar-"), "fooBar");
-  assertEquals(await camelCase("--foo--bar--"), "fooBar");
-  assertEquals(await camelCase("foo-1"), "foo1");
-  assertEquals(await camelCase("foo.bar"), "fooBar");
-  assertEquals(await camelCase("foo..bar"), "fooBar");
-  assertEquals(await camelCase("..foo..bar.."), "fooBar");
-  assertEquals(await camelCase("foo_bar"), "fooBar");
-  assertEquals(await camelCase("__foo__bar__"), "fooBar");
-  assertEquals(await camelCase("foo bar"), "fooBar");
-  assertEquals(await camelCase("  foo  bar  "), "fooBar");
-  assertEquals(await camelCase("-"), "-");
-  assertEquals(await camelCase(" - "), "-");
-  assertEquals(await camelCase("fooBar"), "fooBar");
-  assertEquals(await camelCase("fooBar-baz"), "fooBarBaz");
-  assertEquals(await camelCase("foìBar-baz"), "foìBarBaz");
-  assertEquals(await camelCase("fooBarBaz-bazzy"), "fooBarBazBazzy");
-  assertEquals(await camelCase("FBBazzy"), "fbBazzy");
-  assertEquals(await camelCase("F"), "f");
-  assertEquals(await camelCase("FooBar"), "fooBar");
-  assertEquals(await camelCase("Foo"), "foo");
-  assertEquals(await camelCase("FOO"), "foo");
-  assertEquals(await camelCase(["foo", "bar"]), "fooBar");
-  assertEquals(await camelCase(["foo", "-bar"]), "fooBar");
-  assertEquals(await camelCase(["foo", "-bar", "baz"]), "fooBarBaz");
-  assertEquals(await camelCase(["", ""]), "");
-  assertEquals(await camelCase("--"), "");
-  assertEquals(await camelCase(""), "");
-  assertEquals(await camelCase("--__--_--_"), "");
-  assertEquals(await camelCase(["---_", "--", "", "-_- "]), "");
-  assertEquals(await camelCase("foo bar?"), "fooBar?");
-  assertEquals(await camelCase("foo bar!"), "fooBar!");
-  assertEquals(await camelCase("foo bar$"), "fooBar$");
-  assertEquals(await camelCase("foo-bar#"), "fooBar#");
-  assertEquals(await camelCase("XMLHttpRequest"), "xmlHttpRequest");
-  assertEquals(await camelCase("AjaxXMLHttpRequest"), "ajaxXmlHttpRequest");
+Deno.test("camelCase", () => {
+  assertEquals(camelCase("foo"), "foo");
+  assertEquals(camelCase("foo-bar"), "fooBar");
+  assertEquals(camelCase("foo-bar-baz"), "fooBarBaz");
+  assertEquals(camelCase("foo--bar"), "fooBar");
+  assertEquals(camelCase("--foo-bar"), "fooBar");
+  assertEquals(camelCase("--foo--bar"), "fooBar");
+  assertEquals(camelCase("FOO-BAR"), "fooBar");
+  assertEquals(camelCase("FOÈ-BAR"), "foèBar");
+  assertEquals(camelCase("-foo-bar-"), "fooBar");
+  assertEquals(camelCase("--foo--bar--"), "fooBar");
+  assertEquals(camelCase("foo-1"), "foo1");
+  assertEquals(camelCase("foo.bar"), "fooBar");
+  assertEquals(camelCase("foo..bar"), "fooBar");
+  assertEquals(camelCase("..foo..bar.."), "fooBar");
+  assertEquals(camelCase("foo_bar"), "fooBar");
+  assertEquals(camelCase("__foo__bar__"), "fooBar");
+  assertEquals(camelCase("foo bar"), "fooBar");
+  assertEquals(camelCase("  foo  bar  "), "fooBar");
+  assertEquals(camelCase("-"), "-");
+  assertEquals(camelCase(" - "), "-");
+  assertEquals(camelCase("fooBar"), "fooBar");
+  assertEquals(camelCase("fooBar-baz"), "fooBarBaz");
+  assertEquals(camelCase("foìBar-baz"), "foìBarBaz");
+  assertEquals(camelCase("fooBarBaz-bazzy"), "fooBarBazBazzy");
+  assertEquals(camelCase("FBBazzy"), "fbBazzy");
+  assertEquals(camelCase("F"), "f");
+  assertEquals(camelCase("FooBar"), "fooBar");
+  assertEquals(camelCase("Foo"), "foo");
+  assertEquals(camelCase("FOO"), "foo");
+  assertEquals(camelCase(["foo", "bar"]), "fooBar");
+  assertEquals(camelCase(["foo", "-bar"]), "fooBar");
+  assertEquals(camelCase(["foo", "-bar", "baz"]), "fooBarBaz");
+  assertEquals(camelCase(["", ""]), "");
+  assertEquals(camelCase("--"), "");
+  assertEquals(camelCase(""), "");
+  assertEquals(camelCase("--__--_--_"), "");
+  assertEquals(camelCase(["---_", "--", "", "-_- "]), "");
+  assertEquals(camelCase("foo bar?"), "fooBar?");
+  assertEquals(camelCase("foo bar!"), "fooBar!");
+  assertEquals(camelCase("foo bar$"), "fooBar$");
+  assertEquals(camelCase("foo-bar#"), "fooBar#");
+  assertEquals(camelCase("XMLHttpRequest"), "xmlHttpRequest");
+  assertEquals(camelCase("AjaxXMLHttpRequest"), "ajaxXmlHttpRequest");
+  assertEquals(camelCase("Ajax-XMLHttpRequest"), "ajaxXmlHttpRequest");
+  assertEquals(camelCase([]), "");
+  assertEquals(camelCase("mGridCol6@md"), "mGridCol6@md");
+  assertEquals(camelCase("A::a"), "a::a");
+  assertEquals(camelCase("Hello1World"), "hello1World");
+  assertEquals(camelCase("Hello11World"), "hello11World");
+  assertEquals(camelCase("hello1world"), "hello1World");
+  assertEquals(camelCase("Hello1World11foo"), "hello1World11Foo");
+  assertEquals(camelCase("Hello1"), "hello1");
+  assertEquals(camelCase("hello1"), "hello1");
+  assertEquals(camelCase("1Hello"), "1Hello");
+  assertEquals(camelCase("1hello"), "1Hello");
+  assertEquals(camelCase("h2w"), "h2W");
   assertEquals(
-    await camelCase("Ajax-XMLHttpRequest"),
-    "ajaxXmlHttpRequest",
-  );
-  assertEquals(await camelCase([]), "");
-  assertEquals(await camelCase("mGridCol6@md"), "mGridCol6@md");
-  assertEquals(await camelCase("A::a"), "a::a");
-  assertEquals(await camelCase("Hello1World"), "hello1World");
-  assertEquals(await camelCase("Hello11World"), "hello11World");
-  assertEquals(await camelCase("hello1world"), "hello1World");
-  assertEquals(await camelCase("Hello1World11foo"), "hello1World11Foo");
-  assertEquals(await camelCase("Hello1"), "hello1");
-  assertEquals(await camelCase("hello1"), "hello1");
-  assertEquals(await camelCase("1Hello"), "1Hello");
-  assertEquals(await camelCase("1hello"), "1Hello");
-  assertEquals(await camelCase("h2w"), "h2W");
-  assertEquals(
-    await camelCase("розовый_пушистый-единороги"),
+    camelCase("розовый_пушистый-единороги"),
     "розовыйПушистыйЕдинороги",
   );
   assertEquals(
-    await camelCase("розовый_пушистый-единороги"),
+    camelCase("розовый_пушистый-единороги"),
     "розовыйПушистыйЕдинороги",
   );
   assertEquals(
-    await camelCase("РОЗОВЫЙ_ПУШИСТЫЙ-ЕДИНОРОГИ"),
+    camelCase("РОЗОВЫЙ_ПУШИСТЫЙ-ЕДИНОРОГИ"),
     "розовыйПушистыйЕдинороги",
   );
-  assertEquals(await camelCase("桑德在这里。"), "桑德在这里。");
-  assertEquals(await camelCase("桑德在这里。"), "桑德在这里。");
-  assertEquals(await camelCase("桑德_在这里。"), "桑德在这里。");
+  assertEquals(camelCase("桑德在这里。"), "桑德在这里。");
+  assertEquals(camelCase("桑德在这里。"), "桑德在这里。");
+  assertEquals(camelCase("桑德_在这里。"), "桑德在这里。");
 });
 
-Deno.test("camelCaseSync with pascalCase option", () => {
-  assertEquals(camelCaseSync("foo", { pascalCase: true }), "Foo");
-  assertEquals(camelCaseSync("foo-bar", { pascalCase: true }), "FooBar");
+Deno.test("camelCase with pascalCase option", () => {
+  assertEquals(camelCase("foo", { pascalCase: true }), "Foo");
+  assertEquals(camelCase("foo-bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("foo-bar-baz", { pascalCase: true }), "FooBarBaz");
+  assertEquals(camelCase("foo--bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("--foo-bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("--foo--bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("FOO-BAR", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("FOÈ-BAR", { pascalCase: true }), "FoèBar");
+  assertEquals(camelCase("-foo-bar-", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("--foo--bar--", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("foo-1", { pascalCase: true }), "Foo1");
+  assertEquals(camelCase("foo.bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("foo..bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("..foo..bar..", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("foo_bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("__foo__bar__", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("__foo__bar__", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("foo bar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("  foo  bar  ", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("-", { pascalCase: true }), "-");
+  assertEquals(camelCase(" - ", { pascalCase: true }), "-");
+  assertEquals(camelCase("fooBar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("fooBar-baz", { pascalCase: true }), "FooBarBaz");
+  assertEquals(camelCase("foìBar-baz", { pascalCase: true }), "FoìBarBaz");
   assertEquals(
-    camelCaseSync("foo-bar-baz", { pascalCase: true }),
-    "FooBarBaz",
-  );
-  assertEquals(camelCaseSync("foo--bar", { pascalCase: true }), "FooBar");
-  assertEquals(camelCaseSync("--foo-bar", { pascalCase: true }), "FooBar");
-  assertEquals(camelCaseSync("--foo--bar", { pascalCase: true }), "FooBar");
-  assertEquals(camelCaseSync("FOO-BAR", { pascalCase: true }), "FooBar");
-  assertEquals(camelCaseSync("FOÈ-BAR", { pascalCase: true }), "FoèBar");
-  assertEquals(camelCaseSync("-foo-bar-", { pascalCase: true }), "FooBar");
-  assertEquals(
-    camelCaseSync("--foo--bar--", { pascalCase: true }),
-    "FooBar",
-  );
-  assertEquals(camelCaseSync("foo-1", { pascalCase: true }), "Foo1");
-  assertEquals(camelCaseSync("foo.bar", { pascalCase: true }), "FooBar");
-  assertEquals(camelCaseSync("foo..bar", { pascalCase: true }), "FooBar");
-  assertEquals(
-    camelCaseSync("..foo..bar..", { pascalCase: true }),
-    "FooBar",
-  );
-  assertEquals(camelCaseSync("foo_bar", { pascalCase: true }), "FooBar");
-  assertEquals(
-    camelCaseSync("__foo__bar__", { pascalCase: true }),
-    "FooBar",
-  );
-  assertEquals(
-    camelCaseSync("__foo__bar__", { pascalCase: true }),
-    "FooBar",
-  );
-  assertEquals(camelCaseSync("foo bar", { pascalCase: true }), "FooBar");
-  assertEquals(
-    camelCaseSync("  foo  bar  ", { pascalCase: true }),
-    "FooBar",
-  );
-  assertEquals(camelCaseSync("-", { pascalCase: true }), "-");
-  assertEquals(camelCaseSync(" - ", { pascalCase: true }), "-");
-  assertEquals(camelCaseSync("fooBar", { pascalCase: true }), "FooBar");
-  assertEquals(
-    camelCaseSync("fooBar-baz", { pascalCase: true }),
-    "FooBarBaz",
-  );
-  assertEquals(
-    camelCaseSync("foìBar-baz", { pascalCase: true }),
-    "FoìBarBaz",
-  );
-  assertEquals(
-    camelCaseSync("fooBarBaz-bazzy", { pascalCase: true }),
+    camelCase("fooBarBaz-bazzy", { pascalCase: true }),
     "FooBarBazBazzy",
   );
-  assertEquals(camelCaseSync("FBBazzy", { pascalCase: true }), "FbBazzy");
-  assertEquals(camelCaseSync("F", { pascalCase: true }), "F");
-  assertEquals(camelCaseSync("FooBar", { pascalCase: true }), "FooBar");
-  assertEquals(camelCaseSync("Foo", { pascalCase: true }), "Foo");
-  assertEquals(camelCaseSync("FOO", { pascalCase: true }), "Foo");
-  assertEquals(camelCaseSync(["foo", "bar"], { pascalCase: true }), "FooBar");
-  assertEquals(camelCaseSync(["foo", "-bar"], { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("FBBazzy", { pascalCase: true }), "FbBazzy");
+  assertEquals(camelCase("F", { pascalCase: true }), "F");
+  assertEquals(camelCase("FooBar", { pascalCase: true }), "FooBar");
+  assertEquals(camelCase("Foo", { pascalCase: true }), "Foo");
+  assertEquals(camelCase("FOO", { pascalCase: true }), "Foo");
+  assertEquals(camelCase(["foo", "bar"], { pascalCase: true }), "FooBar");
+  assertEquals(camelCase(["foo", "-bar"], { pascalCase: true }), "FooBar");
   assertEquals(
-    camelCaseSync(["foo", "-bar", "baz"], { pascalCase: true }),
+    camelCase(["foo", "-bar", "baz"], { pascalCase: true }),
     "FooBarBaz",
   );
-  assertEquals(camelCaseSync(["", ""], { pascalCase: true }), "");
-  assertEquals(camelCaseSync("--", { pascalCase: true }), "");
-  assertEquals(camelCaseSync("", { pascalCase: true }), "");
-  assertEquals(camelCaseSync("--__--_--_", { pascalCase: true }), "");
+  assertEquals(camelCase(["", ""], { pascalCase: true }), "");
+  assertEquals(camelCase("--", { pascalCase: true }), "");
+  assertEquals(camelCase("", { pascalCase: true }), "");
+  assertEquals(camelCase("--__--_--_", { pascalCase: true }), "");
+  assertEquals(camelCase(["---_", "--", "", "-_- "], { pascalCase: true }), "");
+  assertEquals(camelCase("foo bar?", { pascalCase: true }), "FooBar?");
+  assertEquals(camelCase("foo bar!", { pascalCase: true }), "FooBar!");
+  assertEquals(camelCase("foo bar$", { pascalCase: true }), "FooBar$");
+  assertEquals(camelCase("foo-bar#", { pascalCase: true }), "FooBar#");
   assertEquals(
-    camelCaseSync(["---_", "--", "", "-_- "], { pascalCase: true }),
-    "",
-  );
-  assertEquals(camelCaseSync("foo bar?", { pascalCase: true }), "FooBar?");
-  assertEquals(camelCaseSync("foo bar!", { pascalCase: true }), "FooBar!");
-  assertEquals(camelCaseSync("foo bar$", { pascalCase: true }), "FooBar$");
-  assertEquals(camelCaseSync("foo-bar#", { pascalCase: true }), "FooBar#");
-  assertEquals(
-    camelCaseSync("XMLHttpRequest", { pascalCase: true }),
+    camelCase("XMLHttpRequest", { pascalCase: true }),
     "XmlHttpRequest",
   );
   assertEquals(
-    camelCaseSync("AjaxXMLHttpRequest", { pascalCase: true }),
+    camelCase("AjaxXMLHttpRequest", { pascalCase: true }),
     "AjaxXmlHttpRequest",
   );
   assertEquals(
-    camelCaseSync("Ajax-XMLHttpRequest", { pascalCase: true }),
+    camelCase("Ajax-XMLHttpRequest", { pascalCase: true }),
     "AjaxXmlHttpRequest",
   );
-  assertEquals(camelCaseSync([], { pascalCase: true }), "");
+  assertEquals(camelCase([], { pascalCase: true }), "");
+  assertEquals(camelCase("mGridCol6@md", { pascalCase: true }), "MGridCol6@md");
+  assertEquals(camelCase("A::a", { pascalCase: true }), "A::a");
+  assertEquals(camelCase("Hello1World", { pascalCase: true }), "Hello1World");
+  assertEquals(camelCase("Hello11World", { pascalCase: true }), "Hello11World");
+  assertEquals(camelCase("hello1world", { pascalCase: true }), "Hello1World");
+  assertEquals(camelCase("hello1World", { pascalCase: true }), "Hello1World");
+  assertEquals(camelCase("hello1", { pascalCase: true }), "Hello1");
+  assertEquals(camelCase("Hello1", { pascalCase: true }), "Hello1");
+  assertEquals(camelCase("1hello", { pascalCase: true }), "1Hello");
+  assertEquals(camelCase("1Hello", { pascalCase: true }), "1Hello");
+  assertEquals(camelCase("h1W", { pascalCase: true }), "H1W");
   assertEquals(
-    camelCaseSync("mGridCol6@md", { pascalCase: true }),
-    "MGridCol6@md",
-  );
-  assertEquals(camelCaseSync("A::a", { pascalCase: true }), "A::a");
-  assertEquals(
-    camelCaseSync("Hello1World", { pascalCase: true }),
-    "Hello1World",
-  );
-  assertEquals(
-    camelCaseSync("Hello11World", { pascalCase: true }),
-    "Hello11World",
-  );
-  assertEquals(
-    camelCaseSync("hello1world", { pascalCase: true }),
-    "Hello1World",
-  );
-  assertEquals(
-    camelCaseSync("hello1World", { pascalCase: true }),
-    "Hello1World",
-  );
-  assertEquals(camelCaseSync("hello1", { pascalCase: true }), "Hello1");
-  assertEquals(camelCaseSync("Hello1", { pascalCase: true }), "Hello1");
-  assertEquals(camelCaseSync("1hello", { pascalCase: true }), "1Hello");
-  assertEquals(camelCaseSync("1Hello", { pascalCase: true }), "1Hello");
-  assertEquals(camelCaseSync("h1W", { pascalCase: true }), "H1W");
-  assertEquals(
-    camelCaseSync("РозовыйПушистыйЕдинороги", { pascalCase: true }),
+    camelCase("РозовыйПушистыйЕдинороги", { pascalCase: true }),
     "РозовыйПушистыйЕдинороги",
   );
   assertEquals(
-    camelCaseSync("розовый_пушистый-единороги", { pascalCase: true }),
+    camelCase("розовый_пушистый-единороги", { pascalCase: true }),
     "РозовыйПушистыйЕдинороги",
   );
   assertEquals(
-    camelCaseSync("РОЗОВЫЙ_ПУШИСТЫЙ-ЕДИНОРОГИ", { pascalCase: true }),
+    camelCase("РОЗОВЫЙ_ПУШИСТЫЙ-ЕДИНОРОГИ", { pascalCase: true }),
     "РозовыйПушистыйЕдинороги",
   );
-  assertEquals(camelCaseSync("桑德在这里。", { pascalCase: true }), "桑德在这里。");
-  assertEquals(camelCaseSync("桑德_在这里。", { pascalCase: true }), "桑德在这里。");
+  assertEquals(camelCase("桑德在这里。", { pascalCase: true }), "桑德在这里。");
+  assertEquals(camelCase("桑德_在这里。", { pascalCase: true }), "桑德在这里。");
 });
 
-Deno.test("Test camelCaseSync with preserveConsecutiveUppercase option", () => {
+Deno.test("camelCase with preserveConsecutiveUppercase option", () => {
   assertEquals(
-    camelCaseSync("foo-BAR", { preserveConsecutiveUppercase: true }),
+    camelCase("foo-BAR", { preserveConsecutiveUppercase: true }),
     "fooBAR",
   );
   assertEquals(
-    camelCaseSync("Foo-BAR", { preserveConsecutiveUppercase: true }),
+    camelCase("Foo-BAR", { preserveConsecutiveUppercase: true }),
     "fooBAR",
   );
   assertEquals(
-    camelCaseSync("fooBAR", { preserveConsecutiveUppercase: true }),
+    camelCase("fooBAR", { preserveConsecutiveUppercase: true }),
     "fooBAR",
   );
   assertEquals(
-    camelCaseSync("fooBaR", { preserveConsecutiveUppercase: true }),
+    camelCase("fooBaR", { preserveConsecutiveUppercase: true }),
     "fooBaR",
   );
   assertEquals(
-    camelCaseSync("FOÈ-BAR", { preserveConsecutiveUppercase: true }),
+    camelCase("FOÈ-BAR", { preserveConsecutiveUppercase: true }),
     "FOÈBAR",
   );
   assertEquals(
-    camelCaseSync(["foo", "BAR"], { preserveConsecutiveUppercase: true }),
+    camelCase(["foo", "BAR"], { preserveConsecutiveUppercase: true }),
     "fooBAR",
   );
   assertEquals(
-    camelCaseSync(["foo", "-BAR"], { preserveConsecutiveUppercase: true }),
+    camelCase(["foo", "-BAR"], { preserveConsecutiveUppercase: true }),
     "fooBAR",
   );
   assertEquals(
-    camelCaseSync(["foo", "-BAR", "baz"], {
-      preserveConsecutiveUppercase: true,
-    }),
+    camelCase(["foo", "-BAR", "baz"], { preserveConsecutiveUppercase: true }),
     "fooBARBaz",
   );
+  assertEquals(camelCase(["", ""], { preserveConsecutiveUppercase: true }), "");
+  assertEquals(camelCase("--", { preserveConsecutiveUppercase: true }), "");
+  assertEquals(camelCase("", { preserveConsecutiveUppercase: true }), "");
   assertEquals(
-    camelCaseSync(["", ""], { preserveConsecutiveUppercase: true }),
-    "",
-  );
-  assertEquals(camelCaseSync("--", { preserveConsecutiveUppercase: true }), "");
-  assertEquals(camelCaseSync("", { preserveConsecutiveUppercase: true }), "");
-  assertEquals(
-    camelCaseSync("--__--_--_", { preserveConsecutiveUppercase: true }),
+    camelCase("--__--_--_", { preserveConsecutiveUppercase: true }),
     "",
   );
   assertEquals(
-    camelCaseSync(["---_", "--", "", "-_- "], {
+    camelCase(["---_", "--", "", "-_- "], {
       preserveConsecutiveUppercase: true,
     }),
     "",
   );
   assertEquals(
-    camelCaseSync("foo BAR?", { preserveConsecutiveUppercase: true }),
+    camelCase("foo BAR?", { preserveConsecutiveUppercase: true }),
     "fooBAR?",
   );
   assertEquals(
-    camelCaseSync("foo BAR!", { preserveConsecutiveUppercase: true }),
+    camelCase("foo BAR!", { preserveConsecutiveUppercase: true }),
     "fooBAR!",
   );
   assertEquals(
-    camelCaseSync("foo BAR$", { preserveConsecutiveUppercase: true }),
+    camelCase("foo BAR$", { preserveConsecutiveUppercase: true }),
     "fooBAR$",
   );
   assertEquals(
-    camelCaseSync("foo-BAR#", { preserveConsecutiveUppercase: true }),
+    camelCase("foo-BAR#", { preserveConsecutiveUppercase: true }),
     "fooBAR#",
   );
   assertEquals(
-    camelCaseSync("XMLHttpRequest", { preserveConsecutiveUppercase: true }),
+    camelCase("XMLHttpRequest", { preserveConsecutiveUppercase: true }),
     "XMLHttpRequest",
   );
   assertEquals(
-    camelCaseSync("AjaxXMLHttpRequest", { preserveConsecutiveUppercase: true }),
+    camelCase("AjaxXMLHttpRequest", { preserveConsecutiveUppercase: true }),
     "ajaxXMLHttpRequest",
   );
   assertEquals(
-    camelCaseSync("Ajax-XMLHttpRequest", {
-      preserveConsecutiveUppercase: true,
-    }),
+    camelCase("Ajax-XMLHttpRequest", { preserveConsecutiveUppercase: true }),
     "ajaxXMLHttpRequest",
   );
-  assertEquals(camelCaseSync([], { preserveConsecutiveUppercase: true }), "");
+  assertEquals(camelCase([], { preserveConsecutiveUppercase: true }), "");
   assertEquals(
-    camelCaseSync("mGridCOl6@md", { preserveConsecutiveUppercase: true }),
+    camelCase("mGridCOl6@md", { preserveConsecutiveUppercase: true }),
     "mGridCOl6@md",
   );
   assertEquals(
-    camelCaseSync("A::a", { preserveConsecutiveUppercase: true }),
+    camelCase("A::a", { preserveConsecutiveUppercase: true }),
     "a::a",
   );
   assertEquals(
-    camelCaseSync("Hello1WORLD", { preserveConsecutiveUppercase: true }),
+    camelCase("Hello1WORLD", { preserveConsecutiveUppercase: true }),
     "hello1WORLD",
   );
   assertEquals(
-    camelCaseSync("Hello11WORLD", { preserveConsecutiveUppercase: true }),
+    camelCase("Hello11WORLD", { preserveConsecutiveUppercase: true }),
     "hello11WORLD",
   );
   assertEquals(
-    camelCaseSync("РозовыйПушистыйFOOдинорогиf", {
+    camelCase("РозовыйПушистыйFOOдинорогиf", {
       preserveConsecutiveUppercase: true,
     }),
     "розовыйПушистыйFOOдинорогиf",
   );
   assertEquals(
-    camelCaseSync("桑德在这里。", { preserveConsecutiveUppercase: true }),
+    camelCase("桑德在这里。", { preserveConsecutiveUppercase: true }),
     "桑德在这里。",
   );
   assertEquals(
-    camelCaseSync("桑德_在这里。", { preserveConsecutiveUppercase: true }),
+    camelCase("桑德_在这里。", { preserveConsecutiveUppercase: true }),
     "桑德在这里。",
+  );
+  assertEquals(
+    camelCase("FooIDs", { preserveConsecutiveUppercase: true }),
+    "fooIDs",
   );
 });
 
-Deno.test("Test camelCaseSync with both pascalCase and preserveConsecutiveUppercase option", () => {
+Deno.test("camelCase with both pascalCase and preserveConsecutiveUppercase option", () => {
   assertEquals(
-    camelCaseSync("foo-BAR", {
+    camelCase("foo-BAR", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR",
   );
   assertEquals(
-    camelCaseSync("fooBAR", {
+    camelCase("fooBAR", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR",
   );
   assertEquals(
-    camelCaseSync("fooBaR", {
+    camelCase("fooBaR", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBaR",
   );
   assertEquals(
-    camelCaseSync("fOÈ-BAR", {
+    camelCase("fOÈ-BAR", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FOÈBAR",
   );
   assertEquals(
-    camelCaseSync("--foo.BAR", {
+    camelCase("--foo.BAR", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR",
   );
   assertEquals(
-    camelCaseSync(["Foo", "BAR"], {
+    camelCase(["Foo", "BAR"], {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR",
   );
   assertEquals(
-    camelCaseSync(["foo", "-BAR"], {
+    camelCase(["foo", "-BAR"], {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR",
   );
   assertEquals(
-    camelCaseSync(["foo", "-BAR", "baz"], {
+    camelCase(["foo", "-BAR", "baz"], {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBARBaz",
   );
   assertEquals(
-    camelCaseSync(["", ""], {
+    camelCase(["", ""], {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "",
   );
   assertEquals(
-    camelCaseSync("--", {
+    camelCase("--", { pascalCase: true, preserveConsecutiveUppercase: true }),
+    "",
+  );
+  assertEquals(
+    camelCase("", { pascalCase: true, preserveConsecutiveUppercase: true }),
+    "",
+  );
+  assertEquals(
+    camelCase("--__--_--_", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "",
   );
   assertEquals(
-    camelCaseSync("", { pascalCase: true, preserveConsecutiveUppercase: true }),
-    "",
-  );
-  assertEquals(
-    camelCaseSync("--__--_--_", {
+    camelCase(["---_", "--", "", "-_- "], {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "",
   );
   assertEquals(
-    camelCaseSync(["---_", "--", "", "-_- "], {
-      pascalCase: true,
-      preserveConsecutiveUppercase: true,
-    }),
-    "",
-  );
-  assertEquals(
-    camelCaseSync("foo BAR?", {
+    camelCase("foo BAR?", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR?",
   );
   assertEquals(
-    camelCaseSync("foo BAR!", {
+    camelCase("foo BAR!", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR!",
   );
   assertEquals(
-    camelCaseSync("Foo BAR$", {
+    camelCase("Foo BAR$", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR$",
   );
   assertEquals(
-    camelCaseSync("foo-BAR#", {
+    camelCase("foo-BAR#", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "FooBAR#",
   );
   assertEquals(
-    camelCaseSync("xMLHttpRequest", {
+    camelCase("xMLHttpRequest", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "XMLHttpRequest",
   );
   assertEquals(
-    camelCaseSync("ajaxXMLHttpRequest", {
+    camelCase("ajaxXMLHttpRequest", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "AjaxXMLHttpRequest",
   );
   assertEquals(
-    camelCaseSync("Ajax-XMLHttpRequest", {
+    camelCase("Ajax-XMLHttpRequest", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "AjaxXMLHttpRequest",
   );
   assertEquals(
-    camelCaseSync([], { pascalCase: true, preserveConsecutiveUppercase: true }),
+    camelCase([], { pascalCase: true, preserveConsecutiveUppercase: true }),
     "",
   );
   assertEquals(
-    camelCaseSync("mGridCOl6@md", {
+    camelCase("mGridCOl6@md", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "MGridCOl6@md",
   );
   assertEquals(
-    camelCaseSync("A::a", {
-      pascalCase: true,
-      preserveConsecutiveUppercase: true,
-    }),
+    camelCase("A::a", { pascalCase: true, preserveConsecutiveUppercase: true }),
     "A::a",
   );
   assertEquals(
-    camelCaseSync("Hello1WORLD", {
+    camelCase("Hello1WORLD", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "Hello1WORLD",
   );
   assertEquals(
-    camelCaseSync("Hello11WORLD", {
+    camelCase("Hello11WORLD", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "Hello11WORLD",
   );
   assertEquals(
-    camelCaseSync("pозовыйПушистыйFOOдинорогиf", {
+    camelCase("pозовыйПушистыйFOOдинорогиf", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "PозовыйПушистыйFOOдинорогиf",
   );
   assertEquals(
-    camelCaseSync("桑德在这里。", {
+    camelCase("桑德在这里。", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
     "桑德在这里。",
   );
   assertEquals(
-    camelCaseSync("桑德_在这里。", {
+    camelCase("桑德_在这里。", {
       pascalCase: true,
       preserveConsecutiveUppercase: true,
     }),
@@ -516,37 +462,91 @@ Deno.test("Test camelCaseSync with both pascalCase and preserveConsecutiveUpperc
   );
 });
 
-Deno.test("Test camelCaseSync with locale option", () => {
-  assertEquals(camelCaseSync("lorem-ipsum", { locale: "tr-TR" }), "loremİpsum");
-  assertEquals(camelCaseSync("lorem-ipsum", { locale: "en-EN" }), "loremIpsum");
+Deno.test("camelCase with locale option", () => {
+  assertEquals(camelCase("lorem-ipsum", { locale: "tr-TR" }), "loremİpsum");
+  assertEquals(camelCase("lorem-ipsum", { locale: "en-EN" }), "loremIpsum");
   assertEquals(
-    camelCaseSync("lorem-ipsum", { locale: ["tr", "TR", "tr-TR"] }),
+    camelCase("lorem-ipsum", { locale: ["tr", "TR", "tr-TR"] }),
     "loremİpsum",
   );
   assertEquals(
-    camelCaseSync("lorem-ipsum", { locale: ["en-EN", "en-GB"] }),
+    camelCase("lorem-ipsum", { locale: ["en-EN", "en-GB"] }),
     "loremIpsum",
   );
   assertEquals(
-    camelCaseSync("ipsum-dolor", { pascalCase: true, locale: "tr-TR" }),
+    camelCase("ipsum-dolor", { pascalCase: true, locale: "tr-TR" }),
     "İpsumDolor",
   );
   assertEquals(
-    camelCaseSync("ipsum-dolor", { pascalCase: true, locale: "en-EN" }),
+    camelCase("ipsum-dolor", { pascalCase: true, locale: "en-EN" }),
     "IpsumDolor",
   );
   assertEquals(
-    camelCaseSync("ipsum-dolor", {
+    camelCase("ipsum-dolor", {
       pascalCase: true,
       locale: ["tr", "TR", "tr-TR"],
     }),
     "İpsumDolor",
   );
   assertEquals(
-    camelCaseSync("ipsum-dolor", {
-      pascalCase: true,
-      locale: ["en-EN", "en-GB"],
-    }),
+    camelCase("ipsum-dolor", { pascalCase: true, locale: ["en-EN", "en-GB"] }),
     "IpsumDolor",
   );
 });
+
+Deno.test("camelCase with disabled locale", () => {
+  withLocaleCaseFunctionsMocked(() => {
+    assertEquals(camelCase("lorem-ipsum", { locale: false }), "loremIpsum");
+    assertEquals(
+      camelCase("ipsum-dolor", { pascalCase: true, locale: false }),
+      "IpsumDolor",
+    );
+    assertEquals(
+      camelCase("ipsum-DOLOR", {
+        pascalCase: true,
+        locale: false,
+        preserveConsecutiveUppercase: true,
+      }),
+      "IpsumDOLOR",
+    );
+  });
+});
+
+const withLocaleCaseFunctionsMocked = (fn: CallableFunction) => {
+  const throwWhenBeingCalled = () => {
+    throw new Error("Should not be called");
+  };
+
+  const toLocaleUpperCase = Object.getOwnPropertyDescriptor(
+    String.prototype,
+    "toLocaleUpperCase",
+  );
+  const toLocaleLowerCase = Object.getOwnPropertyDescriptor(
+    String.prototype,
+    "toLocaleLowerCase",
+  );
+
+  Object.defineProperty(String.prototype, "toLocaleUpperCase", {
+    ...toLocaleUpperCase,
+    value: throwWhenBeingCalled,
+  });
+  Object.defineProperty(String.prototype, "toLocaleLowerCase", {
+    ...toLocaleLowerCase,
+    value: throwWhenBeingCalled,
+  });
+
+  try {
+    fn();
+  } finally {
+    Object.defineProperty(
+      String.prototype,
+      "toLocaleUpperCase",
+      toLocaleUpperCase ?? {},
+    );
+    Object.defineProperty(
+      String.prototype,
+      "toLocaleLowerCase",
+      toLocaleLowerCase ?? {},
+    );
+  }
+};

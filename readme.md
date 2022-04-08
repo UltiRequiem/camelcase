@@ -1,4 +1,17 @@
-import { camelCase } from "./mod.ts";
+# camelCase
+
+Convert a dash/dot/underscore/space separated string to camelCase or PascalCase:
+foo-bar → fooBar
+
+> Correctly handles Unicode strings.
+
+> If you use this on untrusted user input, don't forget to limit the length to
+> something reasonable.
+
+## Usage
+
+```javascript
+import { camelcase } from "https://deno.land/x/camelcase/mod.ts";
 
 camelCase("foo-bar"); //=> 'fooBar'
 
@@ -28,3 +41,4 @@ camelCase(["foo", "BAR"], {
 }); //=> 'FooBAR'
 
 camelCase("lorem-ipsum", { locale: "en-US" }); //=> 'loremIpsum'
+```

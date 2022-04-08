@@ -1,63 +1,20 @@
-interface Options {
-  readonly pascalCase?: boolean;
-  readonly preserveConsecutiveUppercase?: boolean;
-  readonly locale?: string | string[];
-}
+import {
+  LEADING_SEPARATORS,
+  postProcess,
+  preserveCamelCase,
+  preserveConsecutiveUppercase,
+} from "./mod_utils.ts";
+import type { CamelCaseOptions } from "./mod_types.ts";
 
-function preserveCamelCase(string: string, locale: string) {
-  let isLastCharLower = false;
-  let isLastCharUpper = false;
-  let isLastLastCharUpper = false;
-
-  for (let i = 0; i < string.length; i++) {
-    const character = string[i];
-
-    if (isLastCharLower && /[\p{Lu}]/u.test(character)) {
-      string = string.slice(0, i) + "-" + string.slice(i);
-      isLastCharLower = false;
-      isLastLastCharUpper = isLastCharUpper;
-      isLastCharUpper = true;
-      i++;
-    } else if (
-      isLastCharUpper && isLastLastCharUpper && /[\p{Ll}]/u.test(character)
-    ) {
-      string = string.slice(0, i - 1) + "-" + string.slice(i - 1);
-      isLastLastCharUpper = isLastCharUpper;
-      isLastCharUpper = false;
-      isLastCharLower = true;
-    } else {
-      isLastCharLower = character.toLocaleLowerCase(locale) === character &&
-        character.toLocaleUpperCase(locale) !== character;
-      isLastLastCharUpper = isLastCharUpper;
-      isLastCharUpper = character.toLocaleUpperCase(locale) === character &&
-        character.toLocaleLowerCase(locale) !== character;
-    }
-  }
-
-  return string;
-}
-
-function preserveConsecutiveUppercase(input: string) {
-  return input.replace(/^[\p{Lu}](?![\p{Lu}])/gu, (m1) => m1.toLowerCase());
-}
-
-function postProcess(input: string, options: Options) {
-  return input.replace(
-    /[_.\- ]+([\p{Alpha}\p{N}_]|$)/gu,
-    (_, p1) => p1.toLocaleUpperCase(options.locale),
-  )
-    .replace(
-      /\d+([\p{Alpha}\p{N}_]|$)/gu,
-      (m) => m.toLocaleUpperCase(options.locale),
-    );
-}
-
-export function camelCaseSync(input: string | string[], options?: Options) {
+export function camelCase(
+  input: string | string[],
+  options?: CamelCaseOptions,
+) {
   if (!(typeof input === "string" || Array.isArray(input))) {
     throw new TypeError("Expected the input to be `string | string[]`");
   }
 
-  options = {
+  const parsedOptions = {
     pascalCase: false,
     preserveConsecutiveUppercase: false,
     ...options,
@@ -75,36 +32,37 @@ export function camelCaseSync(input: string | string[], options?: Options) {
     return "";
   }
 
+  const toLowerCase = parsedOptions.locale === false
+    ? (string: string) => string.toLowerCase()
+    : (string: string) =>
+      string.toLocaleLowerCase(parsedOptions.locale as string | string[]);
+
+  const toUpperCase = parsedOptions.locale === false
+    ? (string: string) => string.toUpperCase()
+    : (string: string) =>
+      string.toLocaleUpperCase(parsedOptions.locale as string | string[]);
+
   if (input.length === 1) {
-    return options.pascalCase
-      ? input.toLocaleUpperCase(options.locale)
-      : input.toLocaleLowerCase(options.locale);
+    return parsedOptions.pascalCase ? toUpperCase(input) : toLowerCase(input);
   }
 
-  const hasUpperCase = input !== input.toLocaleLowerCase(options.locale);
+  const hasUpperCase = input !== toLowerCase(input);
 
   if (hasUpperCase) {
-    input = preserveCamelCase(input, options.locale as string);
+    input = preserveCamelCase(input, toLowerCase, toUpperCase);
   }
 
-  input = input.replace(/^[_.\- ]+/, "");
+  input = input.replace(LEADING_SEPARATORS, "");
 
-  if (options.preserveConsecutiveUppercase) {
-    input = preserveConsecutiveUppercase(input);
+  if (parsedOptions.preserveConsecutiveUppercase) {
+    input = preserveConsecutiveUppercase(input, toLowerCase);
   } else {
-    input = input.toLocaleLowerCase();
+    input = toLowerCase(input);
   }
 
-  if (options.pascalCase) {
-    input = input.charAt(0).toLocaleUpperCase(options.locale) + input.slice(1);
+  if (parsedOptions.pascalCase) {
+    input = toUpperCase(input.charAt(0)) + input.slice(1);
   }
 
-  return postProcess(input, options);
-}
-
-export default function camelcase(
-  input: string | string[],
-  options?: Options,
-): Promise<string> {
-  return Promise.resolve(camelCaseSync(input, options));
+  return postProcess(input, toUpperCase);
 }
