@@ -7,9 +7,12 @@ import {
 import type { CamelCaseOptions } from "./mod_types.ts";
 
 /**
-Convert a dash/dot/underscore/space separated string to camelCase or PascalCase: `foo-bar` → `fooBar`.
+Convert a dash/dot/underscore/space separated string to camelCase
+or PascalCase: `foo-bar` → `fooBar`.
 Correctly handles Unicode strings.
+
 @param input - String to convert to camel case.
+
 @example
 ```js
 import camelCase = require('camelcase');
@@ -30,10 +33,6 @@ camelCase('Foo-BAR', {preserveConsecutiveUppercase: true});
 camelCase('fooBAR', {pascalCase: true, preserveConsecutiveUppercase: true}));
 //=> 'FooBAR'
 camelCase('foo bar');
-//=> 'fooBar'
-console.log(process.argv[3]);
-//=> '--foo-bar'
-camelCase(process.argv[3]);
 //=> 'fooBar'
 camelCase(['foo', 'bar']);
 //=> 'fooBar'
@@ -105,3 +104,5 @@ export function camelCase(
 
   return postProcess(input, toUpperCase);
 }
+
+export type { CamelCaseOptions };
