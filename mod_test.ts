@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.108.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.137.0/testing/asserts.ts";
 import { camelCase } from "./mod.ts";
 
 Deno.test("camelCase", () => {
