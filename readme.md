@@ -3,13 +3,14 @@
 [![Code Coverage](https://codecov.io/gh/ultirequiem/camelcase/branch/main/graph/badge.svg)](https://codecov.io/gh/ultirequiem/camelcase)
 [![Deno Doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/camelcase/mod.ts)
 
-Convert a dash/dot/underscore/space separated string to camelCase or PascalCase:
-foo-bar → fooBar
+Convert a dash/dot/underscore/space separated string to
+[**camelCase**](https://wikipedia.org/wiki/Camel_case) or
+[**PascalCase**](https://wiktionary.org/wiki/Pascal_case).
 
-Correctly handles Unicode strings.
+**Correctly handles unicode strings.**
 
-If you use this on untrusted user input, don't forget to limit the length to
-something reasonable.
+> If you use this on untrusted user input, don't forget to limit the length to
+> something reasonable.
 
 ## Usage
 
