@@ -84,6 +84,14 @@ my work 🙏
 
 Don't forget to start the repo ⭐
 
+## Authors
+
+[Eliaz Bobadilla](https://ultirequiem.com) - Creator and Maintainer 💪
+
+See also the full list of
+[contributors](https://github.com/UltiRequiem/camelcase/contributors) who
+participated in this project ✨
+
 ## Versioning
 
 We use [Semantic Versioning](http://semver.org). For the versions available, see
