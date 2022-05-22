@@ -15,7 +15,6 @@ Correctly handles Unicode strings.
 
 @example
 ```js
-import camelCase = require('camelcase');
 camelCase('foo-bar');
 //=> 'fooBar'
 camelCase('foo_bar');
@@ -48,7 +47,9 @@ export function camelCase(
   input: string | string[],
   options?: CamelCaseOptions,
 ) {
-  if (!(typeof input === "string" || Array.isArray(input))) {
+  const isArray = Array.isArray(input);
+
+  if (!(typeof input === "string" || isArray)) {
     throw new TypeError("Expected the input to be `string | string[]`");
   }
 
@@ -58,12 +59,13 @@ export function camelCase(
     ...options,
   };
 
-  if (Array.isArray(input)) {
-    input = input.map((x) => x.trim())
+  if (isArray) {
+    input = (input as string[])
+      .map((x) => x.trim())
       .filter((x) => x.length)
       .join("-");
   } else {
-    input = input.trim();
+    input = (input as string).trim();
   }
 
   if (input.length === 0) {
