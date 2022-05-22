@@ -3,8 +3,8 @@ import {
   postProcess,
   preserveCamelCase,
   preserveConsecutiveUppercase,
-} from "./mod_utils.ts";
-import type { CamelCaseOptions } from "./mod_types.ts";
+} from "./utils.ts";
+import type { CamelCaseOptions } from "./types.ts";
 
 /**
 Convert a dash/dot/underscore/space separated string to camelCase
