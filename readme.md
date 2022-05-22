@@ -53,7 +53,7 @@ camelCase("lorem-ipsum", { locale: "en-US" }); //=> 'loremIpsum'
 ### [Node.js 🐢🚀](https://npmjs.com/package/@ultirequiem/camelcase)
 
 ```javascript
-import { timeZones } from "@ultirequiem/camelcase";
+import { camelCase } from "@ultirequiem/camelcase";
 ```
 
 ### [Browser 🌐](https://developer.mozilla.org/en-US/docs/Glossary/Browser)
