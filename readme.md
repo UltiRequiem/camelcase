@@ -9,8 +9,13 @@ Convert a dash/dot/underscore/space separated string to
 
 **Correctly handles unicode strings.**
 
-> If you use this on untrusted user input, don't forget to limit the length to
-> something reasonable.
+If you use this on untrusted user input, don't forget to limit the length to
+something reasonable.
+
+> Based on the
+> [Sindre Sorhus Camelcase Module](https://github.com/sindresorhus/camelcase),
+> they have the same test suite and API, but this version is more than 3 times
+> faster, see the benchmarks below!
 
 ## Usage
 
@@ -71,6 +76,30 @@ Eg 👉
 
 Is hosted on
 [Deno Doc](https://doc.deno.land/https://deno.land/x/camelcase/mod.ts) 📄
+
+## Benchmarks
+
+Check the benchmark code on `bench.ts` ⚡
+
+> [Using Deno's built-in benchmark runner](https://deno.land/manual/tools/benchmarker)
+
+```
+benchmark                 time (avg)             (min … max)       p75       p99      p995
+------------------------------------------------------------ -----------------------------
+Sindre Sorhus Module  175.43 µs/iter (155.82 µs … 857.15 µs) 172.17 µs 349.88 µs 383.48 µs
+This Module            51.42 µs/iter    (42.46 µs … 1.41 ms)  50.26 µs 106.29 µs 116.37 µs
+
+summary
+  This Module
+   3.41x times faster than Sindre Sorhus Module
+```
+
+<!-- UPDATE TO GITHUB VALUE ON FIRST RUN -->
+
+> Version 2.1.0
+
+Benchmarks are run on GitHub Actions on each commit, you can see the latest runs
+[here](https://github.com/UltiRequiem/camelcase/actions/workflows/benchmark.yaml).
 
 ## Support
 
