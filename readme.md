@@ -1,4 +1,4 @@
-# camelCase
+# Camel case
 
 [![Code Coverage](https://codecov.io/gh/ultirequiem/camelcase/branch/main/graph/badge.svg)](https://codecov.io/gh/ultirequiem/camelcase)
 [![Deno Doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/camelcase/mod.ts)
