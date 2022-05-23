@@ -86,15 +86,13 @@ Check the benchmark code on `bench.ts` ⚡
 ```
 benchmark                 time (avg)             (min … max)       p75       p99      p995
 ------------------------------------------------------------ -----------------------------
-Sindre Sorhus Module  175.43 µs/iter (155.82 µs … 857.15 µs) 172.17 µs 349.88 µs 383.48 µs
-This Module            51.42 µs/iter    (42.46 µs … 1.41 ms)  50.26 µs 106.29 µs 116.37 µs
+Sindre Sorhus Module  257.01 µs/iter   (237.4 µs … 382.3 µs)  252.9 µs  331.5 µs  339.9 µs
+This Module               78 µs/iter    (67.6 µs … 214.9 µs)   78.1 µs  152.6 µs  155.1 µs
 
 summary
   This Module
-   3.41x times faster than Sindre Sorhus Module
+   3.29x times faster than Sindre Sorhus Module
 ```
-
-<!-- UPDATE TO GITHUB VALUE ON FIRST RUN -->
 
 > Version 2.1.0
 
