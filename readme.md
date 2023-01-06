@@ -24,7 +24,7 @@ The API is the same on all this platforms ✔️
 ### [Deno 🦕](https://deno.land/x/camelcase)
 
 ```javascript
-import { camelcase } from "https://deno.land/x/camelcase/mod.ts";
+import { camelCase } from "https://deno.land/x/camelcase/mod.ts";
 
 camelCase("foo-bar"); //=> 'fooBar'
 
