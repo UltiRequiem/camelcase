@@ -1,4 +1,4 @@
-import sindreCamelCase from "https://esm.sh/camelcase@7.0.1/";
+import sindreCamelCase from "https://esm.sh/camelcase@8.0.0/";
 
 import { camelCase as thisModuleCamelCase } from "./mod.ts";
 
