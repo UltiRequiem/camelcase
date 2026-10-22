@@ -27,7 +27,7 @@ npm install @ultirequiem/camelcase
 
 ## Usage
 
-ESM only: the same import works in Node.js, Bun and browsers.
+ESM only, types included: the same import works in Node.js, Bun and browsers.
 
 ```javascript
 import { camelCase } from "@ultirequiem/camelcase";
