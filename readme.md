@@ -1,12 +1,13 @@
 # Camel case
 
-Convert a dash/dot/underscore/space separated string to
+Convert dash, dot, underscore or space separated strings to camelCase.
 
 [![npm](https://img.shields.io/npm/v/@ultirequiem/camelcase?logo=npm&color=cb3837)](https://www.npmjs.com/package/@ultirequiem/camelcase)
 [![npm downloads](https://img.shields.io/npm/dm/@ultirequiem/camelcase?color=cb3837)](https://www.npmjs.com/package/@ultirequiem/camelcase)
 [![CI](https://github.com/UltiRequiem/camelcase/actions/workflows/ci.yaml/badge.svg)](https://github.com/UltiRequiem/camelcase/actions/workflows/ci.yaml)
 [![codecov](https://codecov.io/gh/UltiRequiem/camelcase/graph/badge.svg)](https://codecov.io/gh/UltiRequiem/camelcase)
 
+Convert a dash/dot/underscore/space separated string to
 [**camelCase**](https://wikipedia.org/wiki/Camel_case) or
 [**PascalCase**](https://wiktionary.org/wiki/Pascal_case).
 
