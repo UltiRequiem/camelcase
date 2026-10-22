@@ -1,6 +1,6 @@
 import sindreCamelCase from "https://esm.sh/camelcase@8.0.0/";
 
-import { camelCase as thisModuleCamelCase } from "./mod.ts";
+import { camelCase as thisModuleCamelCase } from "../src/index.js";
 
 const loremIpsum = `Lorem Ipsum is simply dummy text of the 
 printing and typesetting industry. Lorem Ipsum has been the

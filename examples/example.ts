@@ -1,4 +1,4 @@
-import { camelCase } from "./mod.ts";
+import { camelCase } from "../src/index.js";
 
 camelCase("foo-bar"); //=> 'fooBar'
 

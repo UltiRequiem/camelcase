@@ -1,7 +1,6 @@
 # Camel case
 
 [![Code Coverage](https://codecov.io/gh/ultirequiem/camelcase/branch/main/graph/badge.svg)](https://codecov.io/gh/ultirequiem/camelcase)
-[![Deno Doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/camelcase/mod.ts)
 
 Convert a dash/dot/underscore/space separated string to
 [**camelCase**](https://wikipedia.org/wiki/Camel_case) or
@@ -17,14 +16,20 @@ something reasonable.
 > they have the same test suite and API, but this version is more than 3 times
 > faster, see the benchmarks below!
 
+## Install
+
+```sh
+npm install camelcase
+```
+
 ## Usage
 
 The API is the same on all this platforms ✔️
 
-### [Deno 🦕](https://deno.land/x/camelcase)
+### [Node.js 🐢🚀](https://npmjs.com/package/camelcase)
 
 ```javascript
-import { camelCase } from "https://deno.land/x/camelcase/mod.ts";
+import { camelCase } from "camelcase";
 
 camelCase("foo-bar"); //=> 'fooBar'
 
@@ -54,12 +59,6 @@ camelCase(["foo", "BAR"], {
 }); //=> 'FooBAR'
 
 camelCase("lorem-ipsum", { locale: "en-US" }); //=> 'loremIpsum'
-```
-
-### [Node.js 🐢🚀](https://npmjs.com/package/@ultirequiem/camelcase)
-
-```javascript
-import { camelCase } from "@ultirequiem/camelcase";
 ```
 
 ### [Browser 🌐](https://developer.mozilla.org/en-US/docs/Glossary/Browser)
@@ -105,9 +104,6 @@ Open an Issue, I will check it a soon as possible 👀
 
 If you want to hurry me up a bit
 [send me a tweet](https://twitter.com/UltiRequiem) 😆
-
-Consider [supporting me on Patreon](https://patreon.com/UltiRequiem) if you like
-my work 🙏
 
 Don't forget to start the repo ⭐
 
