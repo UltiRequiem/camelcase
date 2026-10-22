@@ -74,16 +74,9 @@ Eg 👉
 [Script Tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script)
 ↔️ [JSDelivr](https://cdn.jsdelivr.net/npm/@ultirequiem/camelcase)
 
-## Documentation
-
-Is hosted on
-[Deno Doc](https://doc.deno.land/https://deno.land/x/camelcase/mod.ts) 📄
-
 ## Benchmarks
 
 Check the benchmark code on `bench.ts` ⚡
-
-> [Using Deno's built-in benchmark runner](https://deno.land/manual/tools/benchmarker)
 
 ```
 benchmark                 time (avg)             (min … max)       p75       p99      p995
