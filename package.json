@@ -1,7 +1,7 @@
 {
   "name": "@ultirequiem/camelcase",
   "version": "0.0.0-development",
-  "description": "",
+  "description": "Convert dash, dot, underscore or space separated strings to camelCase.",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -17,7 +17,13 @@
   "engines": {
     "node": ">=20"
   },
-  "keywords": [],
+  "keywords": [
+    "camel-case",
+    "string",
+    "case",
+    "esm",
+    "typescript"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
