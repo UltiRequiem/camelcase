@@ -1,6 +1,9 @@
 # Camel case
 
-[![Code Coverage](https://codecov.io/gh/ultirequiem/camelcase/branch/main/graph/badge.svg)](https://codecov.io/gh/ultirequiem/camelcase)
+[![npm](https://img.shields.io/npm/v/@ultirequiem/camelcase?logo=npm&color=cb3837)](https://www.npmjs.com/package/@ultirequiem/camelcase)
+[![npm downloads](https://img.shields.io/npm/dm/@ultirequiem/camelcase?color=cb3837)](https://www.npmjs.com/package/@ultirequiem/camelcase)
+[![CI](https://github.com/UltiRequiem/camelcase/actions/workflows/ci.yaml/badge.svg)](https://github.com/UltiRequiem/camelcase/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/UltiRequiem/camelcase/graph/badge.svg)](https://codecov.io/gh/UltiRequiem/camelcase)
 
 Convert a dash/dot/underscore/space separated string to
 [**camelCase**](https://wikipedia.org/wiki/Camel_case) or
@@ -19,17 +22,17 @@ something reasonable.
 ## Install
 
 ```sh
-npm install camelcase
+npm install @ultirequiem/camelcase
 ```
 
 ## Usage
 
-The API is the same on all this platforms ✔️
+The API is the same on all these platforms ✔️
 
-### [Node.js 🐢🚀](https://npmjs.com/package/camelcase)
+### [Node.js 🐢🚀](https://npmjs.com/package/@ultirequiem/camelcase)
 
 ```javascript
-import { camelCase } from "camelcase";
+import { camelCase } from "@ultirequiem/camelcase";
 
 camelCase("foo-bar"); //=> 'fooBar'
 
@@ -100,12 +103,12 @@ Benchmarks are run on GitHub Actions on each commit, you can see the latest runs
 
 ## Support
 
-Open an Issue, I will check it a soon as possible 👀
+Open an Issue, I will check it as soon as possible 👀
 
 If you want to hurry me up a bit
 [send me a tweet](https://twitter.com/UltiRequiem) 😆
 
-Don't forget to start the repo ⭐
+Don't forget to star the repo ⭐
 
 ## Authors
 
